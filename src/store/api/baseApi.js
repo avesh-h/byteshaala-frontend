@@ -10,11 +10,9 @@ import { getCookie } from "@/lib/utils";
 // Create mutex instance to prevent concurrent refresh calls
 const mutex = new Mutex();
 
-const refreshToken = getCookie("refToken");
-
 // Base query configuration
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://byteshaala-backend.onrender.com/api/v1",
+  baseUrl: `${import.meta.env.VITE_API_BASE_URL}/api/v1`,
   prepareHeaders: (headers, { getState }) => {
     // Get the token from the auth state
     const token = getState().auth.token || getCookie("token");
@@ -45,13 +43,11 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
       } else {
         // Refresh failed, logout user
         api.dispatch(logout());
-        // Redirect to login page
         window.location.href = "/login";
       }
     } else {
       // No refresh token available, logout user
       api.dispatch(logout());
-      // Redirect to login page
       window.location.href = "/login";
     }
   }
@@ -81,7 +77,7 @@ const handleTokenRefresh = async (api, extraOptions) => {
           body: { refreshToken },
         },
         api,
-        extraOptions
+        extraOptions,
       );
 
       if (refreshResult.data?.success) {
@@ -93,7 +89,7 @@ const handleTokenRefresh = async (api, extraOptions) => {
           refreshTokenSuccess({
             token: accessToken,
             refreshToken: newRefreshToken,
-          })
+          }),
         );
 
         return { success: true };
@@ -122,12 +118,17 @@ export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReauth,
   tagTypes: [
+    "Auth",
+    "Profile",
+    "Cart",
     "getAllUsers",
     "getCourses",
     "getCourseById",
     "getSections",
+    "getCourseSections",
     "getLectures",
     "getCourseCurriculum",
+    "getAllReviews",
   ],
   endpoints: () => ({}),
 });

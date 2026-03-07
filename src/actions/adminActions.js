@@ -66,7 +66,7 @@ export const adminApi = baseApi.injectEndpoints({
         method: "POST",
         body: sectionData,
       }),
-      invalidatesTags: ["getSections", "getCourseCurriculum"],
+      invalidatesTags: ["getSections", "getCourseSections", "getCourseCurriculum", "getCourseById"],
     }),
 
     getSectionsByCourse: builder.query({
@@ -79,7 +79,7 @@ export const adminApi = baseApi.injectEndpoints({
         url: `/course/sections/${sectionId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["getSections", "getCourseCurriculum"],
+      invalidatesTags: ["getSections", "getCourseSections", "getCourseCurriculum", "getCourseById"],
     }),
 
     // Lecture Management Endpoints
@@ -89,7 +89,7 @@ export const adminApi = baseApi.injectEndpoints({
         method: "POST",
         body: lectureData,
       }),
-      invalidatesTags: ["getLectures", "getCourseCurriculum"],
+      invalidatesTags: ["getLectures", "getCourseSections", "getCourseCurriculum"],
     }),
 
     getLecturesBySection: builder.query({
@@ -103,7 +103,7 @@ export const adminApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: lectureData,
       }),
-      invalidatesTags: ["getLectures", "getCourseCurriculum"],
+      invalidatesTags: ["getLectures", "getCourseSections", "getCourseCurriculum"],
     }),
 
     deleteLecture: builder.mutation({
@@ -111,7 +111,7 @@ export const adminApi = baseApi.injectEndpoints({
         url: `/course/sections/${sectionId}/lectures/${lectureId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["getLectures", "getCourseCurriculum"],
+      invalidatesTags: ["getLectures", "getCourseSections", "getCourseCurriculum"],
     }),
 
     // Get Course Curriculum (Sections + Lectures)

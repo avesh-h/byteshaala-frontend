@@ -146,7 +146,7 @@ const CartSection = () => {
 
               {cartCourses.map((course) => (
                 <CartCard
-                  key={course.id}
+                  key={course._id || course.id}
                   course={course}
                   handleRemoveFromCart={handleRemoveFromCart}
                 />

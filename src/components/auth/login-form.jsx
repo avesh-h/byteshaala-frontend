@@ -43,6 +43,7 @@ export function LoginForm({ className, ...props }) {
           loginSuccess({
             user: result.data.user,
             token: result?.data?.accessToken,
+            refreshToken: result?.data?.refreshToken,
           })
         );
 

@@ -151,12 +151,22 @@ export function SignupForm({ className, ...props }) {
       fieldsToValidate.length > 0 ? await trigger(fieldsToValidate) : true;
 
     if (isValid) {
-      setCurrentStep((prev) => Math.min(prev + 1, TOTAL_STEPS));
+      // Skip academic step for professionals — go directly to interests
+      if (currentStep === 2 && selectedUserType === "PROFESSIONAL") {
+        setCurrentStep(4);
+      } else {
+        setCurrentStep((prev) => Math.min(prev + 1, TOTAL_STEPS));
+      }
     }
   };
 
   const prevStep = () => {
-    setCurrentStep((prev) => Math.max(prev - 1, 1));
+    // Skip back over the academic step for professionals
+    if (currentStep === 4 && selectedUserType === "PROFESSIONAL") {
+      setCurrentStep(2);
+    } else {
+      setCurrentStep((prev) => Math.max(prev - 1, 1));
+    }
   };
 
   const toggleInterest = (interest) => {
@@ -371,11 +381,6 @@ export function SignupForm({ className, ...props }) {
   );
 
   const renderStep3 = () => {
-    if (selectedUserType === "PROFESSIONAL") {
-      setCurrentStep(4);
-      return null;
-    }
-
     return (
       <div className="space-y-4">
         <div className="flex flex-col gap-2 mb-4">

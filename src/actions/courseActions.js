@@ -32,35 +32,6 @@ export const courseApi = baseApi.injectEndpoints({
       providesTags: ["getCourseById"],
     }),
 
-    // Create a new course (admin only)
-    createCourse: builder.mutation({
-      query: (courseData) => ({
-        url: "course/create-course",
-        method: "POST",
-        body: courseData,
-      }),
-      invalidatesTags: ["getCourses"],
-    }),
-
-    // Update an existing course (admin only)
-    updateCourse: builder.mutation({
-      query: ({ id, ...courseData }) => ({
-        url: `course/update-course/${id}`,
-        method: "PUT",
-        body: courseData,
-      }),
-      invalidatesTags: ["getCourses", "getCourseById"],
-    }),
-
-    // Delete a course (admin only)
-    deleteCourse: builder.mutation({
-      query: (id) => ({
-        url: `course/delete-course/${id}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: ["getCourses", "getCourseById"],
-    }),
-
     // Add review to a course
     addReview: builder.mutation({
       query: ({ courseId, rating, comment }) => ({
@@ -88,9 +59,6 @@ export const courseApi = baseApi.injectEndpoints({
 export const {
   useGetCoursesQuery,
   useGetCourseByIdQuery,
-  useCreateCourseMutation,
-  useUpdateCourseMutation,
-  useDeleteCourseMutation,
   useAddReviewMutation,
   useGetAllReviewsQuery,
   useGetCourseSectionsQuery,
